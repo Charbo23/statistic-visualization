@@ -7,7 +7,6 @@ export default new Vuex.Store({
   state: {
     intervalBig: 86400000,
     income: {},
-    intervalSmall: 60000,
   },
   mutations: {
     SetIncome: (state, data) => {

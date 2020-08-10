@@ -1,17 +1,17 @@
-::v-deep .el-carousel{
+::v-deep .el-carousel {
   width: 100%;
   height: 100%;
-  .el-carousel__container{
+  .el-carousel__container {
     width: 100%;
     height: 100%;
   }
 }
 
-::v-deep .el-carousel__indicators{
+::v-deep .el-carousel__indicators {
   display: none;
 }
 
-.home_page{
+.home_page {
   width: 100%;
   height: 100%;
   background: url("../../assets/images/BG@2x.png");
@@ -19,7 +19,7 @@
   display: flex;
   flex-direction: column;
 }
-.header{
+.header {
   width: 100%;
   height: 90px;
   background: url("../../assets/images/bg_title@2x.png");
@@ -28,47 +28,56 @@
   justify-content: center;
   align-items: center;
   position: relative;
-  .title{
-    font-size:40px;
-    font-weight:800;
-    font-style:italic;
-    color:rgba(239,255,254,1);
+  .title {
+    font-size: 40px;
+    font-weight: 800;
+    font-style: italic;
+    color: rgba(239, 255, 254, 1);
     letter-spacing: 14px;
   }
-  .dateRange{
+  .dateRange {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
     left: 20px;
   }
-  .right_group{
+  .right_group {
     position: absolute;
     right: 40px;
     top: 20px;
     display: flex;
     align-items: center;
-    .left{
+    .left {
       width: 40px;
       height: 40px;
       margin-right: 10px;
     }
-    .right{
+    .right {
       width: 32px;
       height: 32px;
     }
   }
 }
 
-.content_group{
+.content_group {
   height: 100%;
   //height: calc(100vh - 114px);
   //flex: 1;
   //height: 100px;
 }
-.content_padding{
+.content_padding {
   height: 100%;
   position: relative;
-  .right_data{
+  .chart-title {
+    position: absolute;
+    left:50%;
+    top: 50px;
+    transform: translateX(-50%);
+    font-size: 30px;
+    color: #fff;
+    z-index: 1000;
+  }
+  .right-data {
     position: absolute;
     right: 100px;
     top: 50%;
@@ -76,42 +85,45 @@
     width: 400px;
     height: 600px;
     background: #000;
-    border:1px solid #000;
-    border-image: url(../../assets/images/bg_big@2x.png);//增加了repeat属性 效果如下
-    border-image-slice:30 30 30 fill;
-    border-image-width:10px;
+    border: 1px solid #000;
+    border-image: url(../../assets/images/bg_big@2x.png); //增加了repeat属性 效果如下
+    border-image-slice: 30 30 30 fill;
+    border-image-width: 10px;
     z-index: 1000;
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 30px;
     font-size: 20px;
+    .subscribe-total{
+      font-size: 60px;
+    }
   }
-  .center_group{
+  .center_group {
     width: 100%;
     height: 100%;
-    .first1{
+    .first1 {
       height: 45%;
     }
-    .second1{
+    .second1 {
       height: calc(55% - 40px);
       margin-top: 40px;
     }
-    .first2{
+    .first2 {
       height: 48%;
     }
-    .second2{
+    .second2 {
       height: calc(52% - 40px);
       margin-top: 40px;
     }
   }
-  .footer_group{
+  .footer_group {
     width: 100%;
     height: calc(35% - 40px);
     margin-top: 40px;
   }
 }
-.plot_group{
+.plot_group {
   width: 100%;
   height: 100%;
   position: relative;
