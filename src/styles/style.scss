@@ -1,0 +1,176 @@
+/* http://meyerweb.com/eric/tools/css/reset/
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+/*
+ CSS初始化
+ */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+body {
+  line-height: 1;
+}
+ol, ul {
+  list-style: none;
+}
+blockquote, q {
+  quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+
+/*
+  自定义CSS
+ */
+
+* {
+  &,
+  &:before,
+  &:after {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+}
+
+html,body{
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+@font-face {
+  font-family: "AlipayNumber";
+  src: url("https://gw.alipayobjects.com/as/g/antui/antui-static/1.0.3/fonts/AlipayNumber-Regular.ttf")
+  format("truetype");
+}
+
+body{
+  font-family: "PingFang-SC-Heavy", -apple-system, BlinkMacSystemFont, "PingFang SC","Helvetica Neue",STHeiti,"Microsoft Yahei",Tahoma,Simsun,sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: #000;
+  color: #fff;
+  line-height: 1;
+  font-size: 24px;
+  overflow: auto;
+}
+#app{
+  height: 100%;
+  //overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.page-contain{
+  height: 100vh;
+  position: relative;
+  background: #fff;
+}
+
+//margin && padding
+$sites:(
+        t: top,
+        r: right,
+        b: bottom,
+        l: left
+);
+
+$sizes:(
+        0: 0,
+        10: 10px,
+        20: 20px,
+        30: 30px,
+        40: 40px
+);
+
+@each $prop,
+$abbrev in ( m: margin,
+        p: padding) {
+  @each $name,
+  $value in $sites {
+    @each $size,
+    $length in $sizes {
+      .#{$prop}-#{$name}-#{$size} {
+        #{$abbrev}-#{$value}: $length;
+      }
+    }
+  }
+}
+
+input{
+  border: none;
+  outline:none;
+}
+
+input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
+  color: #00665F;
+}
+input:-moz-placeholder, textarea:-moz-placeholder {
+  color: #00665F;
+}
+input::-moz-placeholder, textarea::-moz-placeholder {
+  color: #00665F;
+}
+input:-ms-input-placeholder, textarea:-ms-input-placeholder {
+  color: #00665F;
+}
+.button-base{
+  width:380px;
+  height:56px;
+  border-radius:2px;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+}
+.button-blue{
+  background: #00C7B9;
+  color: #FFFFFF;
+}
+
+.flex1{
+  flex: 1;
+}
+
+.m-0{
+  margin: 0 !important;
+}
+
+.p-0{
+  padding: 0 !important;
+}
+.one_line_ellipsis{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

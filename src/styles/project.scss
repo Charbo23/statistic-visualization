@@ -1,0 +1,141 @@
+.img-vip{
+  width: 374px;
+  height: 362px;
+}
+.BMap_cpyCtrl {
+  display:none !important;
+}
+.anchorBL{
+  display:none;
+}
+.title_group_pub{
+  position: absolute;
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+  left: 20px;
+  top: 20px;
+  right: 20px;
+  padding-left: 10px;
+  &::before{
+    display: block;
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 20px;
+    background: #F2D300;
+  }
+  .title{
+    color: #EFFFFE;
+    font-size: 24px;
+    //margin-left: 6px;
+  }
+  .right{
+    display: flex;
+    align-items: center;
+    .name{
+      color: #B5F0EC;
+      font-size: 18px;
+      font-weight: 500;
+    }
+    .num{
+      color: #F2D300;
+      font-size: 20px;
+    }
+  }
+}
+
+.page_pub{
+  width: 100%;
+  height: 100%;
+  border:1px solid #000;
+  border-image: url(../assets/images/bg_big@2x.png);//增加了repeat属性 效果如下
+  border-image-slice:30 30 30 fill;
+  border-image-width:10px;
+  padding: 60px 20px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+::-webkit-scrollbar{
+  display: none;
+}
+
+.progress1{
+  width: 202px;
+  .el-progress-bar__outer{
+    background: #3E1900;
+  }
+}
+
+.progress2{
+  width: 202px;
+  .el-progress-bar__outer{
+    background: #002B28;
+  }
+}
+
+.progress{
+  width: 100px;
+  .el-progress-bar__outer{
+    background: #002B28;
+  }
+  .el-progress-bar__inner{
+    transition: width 1s;
+  }
+}
+
+.amap-logo{
+  display: none !important;//去掉高德地图logo
+}
+.amap-copyright {
+  opacity:0;//去掉高德的版本号
+}
+
+.col_active{
+  color: #FF7011;
+}
+
+.el-col{
+  height: 100%;
+}
+
+.login_input_pub{
+  display: flex;
+  align-items: center;
+  width: 380px;
+  height: 56px;
+  background: #002220;
+  padding: 0 12px;
+  .left{
+    width: 32px;
+    height: 32px;
+  }
+  .line{
+    width:2px;
+    height:28px;
+    background:rgba(0,87,81,1);
+    margin-left: 16px;
+    margin-right: 16px;
+  }
+  .input{
+    padding: 5px;
+    height: 32px;
+    flex: 1;
+    color: #00C7B9;
+    font-size: 18px;
+    background: transparent;
+  }
+}
+.amap-e{
+  z-index: 200 !important;
+}
+#txMap{
+  div{
+    display: none !important;
+  }
+}
