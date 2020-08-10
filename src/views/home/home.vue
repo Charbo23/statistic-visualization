@@ -21,6 +21,20 @@
             </el-row>
           </el-carousel-item>
         </el-carousel>
+        <div class="right_data">
+            <div class="first_group">
+                <ICountUp
+                    :delay="delay"
+                    :endVal="endVal"
+                    :options="options"
+                    @ready="onReady"
+                ></ICountUp>
+            </div>
+          <div class="second_group">
+
+          </div>
+          <div class="third_group">数据</div>
+        </div>
       </div>
     </div>
   </div>
@@ -29,22 +43,35 @@
 <script>
   import heatMap from "../../components/heatMap/heatMap";
   import ArcFlow from "../../components/ArcFlow/ArcFlow";
+  import ICountUp from 'vue-countup-v2';
   import { removeToken } from "../../utils/auth";
 
   export default {
     name: 'home',
     data() {
       return {
-        value2: ['2020-01-01', '2020-04-06']
+        value2: ['2020-01-01', '2020-04-06'],
+        delay: 1000,
+        endVal: 120500,
+        options: {
+          useEasing: true,
+          useGrouping: true,
+          separator: ',',
+          decimal: '.',
+          prefix: '',
+          suffix: ''
+        }
       }
     },
     components: {
       heatMap,
-      ArcFlow
+      ArcFlow,
+      ICountUp
     },
     methods: {
-      dataChange(e) {
-        console.log(e)
+      onReady: function(instance, CountUp) {
+        const that = this;
+        instance.update(that.endVal + 100);
       },
       // 退出登录
       loginOut() {

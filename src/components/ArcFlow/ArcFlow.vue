@@ -8,7 +8,7 @@
         name: "ArcFlow",
         methods: {
             initMap() {
-                var center = new TMap.LatLng(37.80787, 112.269029);
+                var center = new TMap.LatLng(36, 118);
                 var data = arcData;
                 //初始化地图
                 var map = new TMap.Map("txMap", {

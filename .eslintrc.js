@@ -20,7 +20,8 @@ module.exports = {
     // 关闭语句强制分号结尾
     "semi": [0],
     "no-undef": 0,
-    "vue/no-unused-components": "off"
+    "vue/no-unused-components": "off",
+    "no-extra-semi": "off"
   },
   parserOptions: {
     parser: 'babel-eslint'
