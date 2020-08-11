@@ -54,7 +54,7 @@ import ArcFlow from "../../components/ArcFlow/ArcFlow";
 import _ from "lodash";
 import IOdometer from "vue-odometer";
 import "odometer/themes/odometer-theme-default.css";
-import { getUserVisualizedData, getCityUser, getShipOrder } from "@/api/home";
+import { getUserVisualizedData } from "@/api/home";
 
 export default {
   name: "home",
@@ -89,7 +89,8 @@ export default {
       this.curSlideIndex = cur;
     },
     async getRightData() {
-      const ret = await getUserVisualizedData();
+      const ret = await getUserVisualizedData({type:'common'});
+      console.log(ret);
       this.rightData.subscribe =
         parseInt(ret.data.total_num) > this.rightData.subscribe
           ? parseInt(ret.data.total_num)
@@ -104,10 +105,10 @@ export default {
           : this.rightData.uniqueVisitor;
     },
     async getMapData() {
-      const { city_ratio_list, city_lnglat_list } = await getCityUser();
+      const { city_ratio_list, city_lnglat_list } = (await getUserVisualizedData({type:'city_user'})).data;
       this.norData = city_ratio_list;
       this.geoCoordMap = city_lnglat_list;
-      this.arcData = await getShipOrder();
+      this.arcData =( await getUserVisualizedData({type:'ship_order'})).data;
     },
   },
   created() {},

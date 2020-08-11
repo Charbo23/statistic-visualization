@@ -40,9 +40,8 @@ export default {
         amap: {
           zoom: 5,
           zooms: [3, 20],
-          // mapStyle: 'amap://styles/darkblue', // 地图主题
           mapStyle: "amap://styles/e6d3dfe65e954495b5ac5643e8a070e8",
-          center: [115, 35], // 中心点
+          center: [115, 36], // 中心点
           resizeEnable: true,
         },
         series: [
@@ -75,7 +74,7 @@ export default {
             name: "当前更新",
             type: "effectScatter",
             coordinateSystem: "amap",
-            data: this.convertData(_.shuffle(this.norData).slice(0, 6)),
+            data: this.convertData(   _.shuffle(this.norData).slice(0, _.random(1,this.norData.length))),
             symbolSize: function (val) {
               return val[2] / 10;
             },
@@ -142,9 +141,10 @@ export default {
     this.interval = setInterval(() => {
       // 随机给点加上波纹动效
       this.mapChartOpt.series[1].data = this.convertData(
-        _.shuffle(this.norData).slice(0, 6)
+        _.shuffle(this.norData).slice(0, _.random(1,this.norData.length))
       );
-    }, 5000);
+      this.updateChart()
+    }, 10000);
   },
 };
 </script>
