@@ -74,7 +74,7 @@
   .chart-title {
     position: absolute;
     left:50%;
-    top: 0.25rem;
+    top: 50px;
     transform: translateX(-50%);
     font-size: 30px;
     color: #fff;
@@ -82,7 +82,7 @@
   }
   .right-data {
     position: absolute;
-    right: 1.1rem;
+    right: 200px;
     top: 50%;
     transform: translateY(-50%);
     z-index: 1000;

@@ -29,9 +29,9 @@ export default {
       let data = this.arcData;
       //初始化地图
       this.map = new TMap.Map('txMap', {
-        zoom: 4.6, //设置地图缩放级别
+        zoom: 4.5, //设置地图缩放级别
         pitch: 30,
-        center: new TMap.LatLng(38, 120), //设置地图中心点坐标
+        center: new TMap.LatLng(38, 115), //设置地图中心点坐标
         mapStyleId: 'style1' //个性化样式
       });
       //初始化弧线图并添加至map图层
