@@ -2,11 +2,15 @@
   <div class="home_page" v-cloak>
     <div class="content_group">
       <div class="content_padding">
-        <el-carousel ref="slideEl" :initial-index="0" :autoplay="false" :loop="true" @change="onSlideChange">
+        <el-carousel ref="slideEl" :initial-index="0" :autoplay="false" @change="onSlideChange">
           <el-carousel-item>
             <el-row class="center_group">
               <el-col :span="24">
-                <HeatMap :norData="norData" :highlightNorData="highlightNorData" :geoCoordMap="geoCoordMap"></HeatMap>
+                <HeatMap
+                  :norData="norData"
+                  :highlightNorData="highlightNorData"
+                  :geoCoordMap="geoCoordMap"
+                ></HeatMap>
               </el-col>
             </el-row>
           </el-carousel-item>
@@ -77,7 +81,7 @@ export default {
         uv: 0
       },
       norData: [],
-      highlightNorData:[],
+      highlightNorData: [],
       geoCoordMap: {},
       arcData: [],
       curArcData: [],
@@ -132,12 +136,17 @@ export default {
       if (retArr[0].code == 0) {
         const { city_ratio_list, city_lnglat_list } = retArr[0].data;
         this.norData = city_ratio_list;
-        this.highlightNorData=_.shuffle(city_ratio_list).slice(0, _.random(1,city_ratio_list.length))
+        this.updateHighlightData();
+
         this.geoCoordMap = city_lnglat_list;
       }
       if (retArr[1].code == 0) {
         this.arcData = retArr[1].data;
       }
+    },
+    // 更新人数分布闪动
+    updateHighlightData() {
+      this.highlightNorData = _.shuffle(this.norData).slice(0, _.clamp(_.random(1, this.norData.length), 0, 10));
     }
   },
   created() {},
@@ -165,8 +174,7 @@ export default {
           this.curArcData = this.curArcData.concat(this.arcData[this.curArcIndex].data);
         }
       }
-      // 更新人数分布闪动
-        this.highlightNorData=_.shuffle(this.norData).slice(0, _.random(1,this.norData.length))
+      this.updateHighlightData();
     }, 5000);
     this.slideInterval = setInterval(() => {
       this.$refs.slideEl.next();
