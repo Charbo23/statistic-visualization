@@ -2,7 +2,7 @@
   <div class="home_page" v-cloak>
     <div class="content_group">
       <div class="content_padding">
-        <el-carousel ref="slideEl" :initial-index="0" :autoplay="false"  @change="onSlideChange">
+        <el-carousel ref="slideEl" :initial-index="0" :autoplay="false" @change="onSlideChange">
           <el-carousel-item>
             <el-row class="center_group">
               <el-col :span="24">
@@ -20,25 +20,33 @@
         </el-carousel>
         <div class="chart-title">{{chartTitle}}</div>
         <div class="right-data">
-          <div class="subscribe-total">
-            <IOdometer class="iOdometer right-data-num" :value="rightData.subscribe" />
-            <div class="sub-title">公众号总关注量</div>
+          <div class="top-num">
+            <IOdometer class="iOdometer right-data-num" :value="rightData.uv" />
+            <div class="sub-title">今日UV数</div>
           </div>
           <table class="right-data-table">
-            <tr class="right-data-item question-done">
+            <tr class="right-data-item bottom-num">
+              <td>
+                <div class="left-title">公众号关注</div>
+              </td>
+              <td>
+                <IOdometer class="iOdometer right-data-num" :value="rightData.totalNum" />
+              </td>
+            </tr>
+            <tr class="right-data-item bottom-num">
               <td>
                 <div class="left-title">今日做题人数</div>
               </td>
               <td>
-                <IOdometer class="iOdometer right-data-num" :value="rightData.questionDone" />
+                <IOdometer class="iOdometer right-data-num" :value="rightData.learnUsers" />
               </td>
             </tr>
-            <tr class="right-data-item unique-visitor">
+            <tr class="right-data-item bottom-num">
               <td>
-                <div class="left-title">今日UV数</div>
+                <div class="left-title">今日做题总量</div>
               </td>
               <td>
-                <IOdometer class="iOdometer right-data-num" :value="rightData.uniqueVisitor" />
+                <IOdometer class="iOdometer right-data-num" :value="rightData.learnNums" />
               </td>
             </tr>
           </table>
@@ -60,18 +68,20 @@ export default {
   name: "home",
   data() {
     return {
-      chartTitleArr: ["做题人数分布图", "物流轨迹图"],
+      chartTitleArr: ["易哈佛当前在线考生人数分布图", "易哈佛物流在途轨迹图"],
       curSlideIndex: 0,
       rightData: {
-        subscribe: 0,
-        questionDone: 0,
-        uniqueVisitor: 0,
+        totalNum: 0,
+        learnUsers: 0,
+        learnNums: 0,
+        uv: 0,
       },
-      norData:[],
-      geoCoordMap:{},
-      arcData:[],
+      norData: [],
+      geoCoordMap: {},
+      arcData: [],
       curArcData: [],
       curArcIndex: 0,
+      dataInterval: null,
     };
   },
   components: {
@@ -89,57 +99,64 @@ export default {
       this.curSlideIndex = cur;
     },
     async getRightData() {
-      const ret = await getUserVisualizedData({type:'common'});
-      console.log(ret);
-      this.rightData.subscribe =
-        parseInt(ret.data.total_num) > this.rightData.subscribe
+      const ret = await getUserVisualizedData({ type: "common" });
+      this.rightData.totalNum =
+        parseInt(ret.data.total_num) > this.rightData.totalNum
           ? parseInt(ret.data.total_num)
-          : this.rightData.subscribe;
-      this.rightData.questionDone =
-        ret.data.learn_users > this.rightData.questionDone
+          : this.rightData.totalNum;
+      this.rightData.learnUsers =
+        ret.data.learn_users > this.rightData.learnUsers
           ? ret.data.learn_users
-          : this.rightData.questionDone;
-      this.rightData.uniqueVisitor =
-        ret.data.uv > this.rightData.uniqueVisitor
+          : this.rightData.learnUsers;
+      this.rightData.learnNums =
+        ret.data.learn_nums > this.rightData.learnNums
+          ? ret.data.learn_nums
+          : this.rightData.learnNums;
+      this.rightData.uv =
+        ret.data.uv > this.rightData.uv
           ? ret.data.uv
-          : this.rightData.uniqueVisitor;
+          : this.rightData.uv;
     },
     async getMapData() {
-      const { city_ratio_list, city_lnglat_list } = (await getUserVisualizedData({type:'city_user'})).data;
+      const { city_ratio_list, city_lnglat_list } = (
+        await getUserVisualizedData({ type: "city_user" })
+      ).data;
       this.norData = city_ratio_list;
       this.geoCoordMap = city_lnglat_list;
-      this.arcData =( await getUserVisualizedData({type:'ship_order'})).data;
+      this.arcData = (await getUserVisualizedData({ type: "ship_order" })).data;
     },
   },
   created() {},
   async mounted() {
     await this.getRightData();
     await this.getMapData();
-    // this.arcData.some((item, index) => {
-    //   // 寻找当前时间点的物流数据作为开始
-    //   var curIndexTime= (item.time + "").padEnd(13, 0);
-    //   if (  curIndexTime< new Date().getTime()) {
-    //     this.curArcIndex = index;
-    //     return false;
-    //   } else {
-    //     return true;
-    //   }
-    // });
-    this.curArcData = this.arcData[this.curArcIndex].data;
-    setInterval(() => {
-      this.getRightData();
-      this.curArcIndex = _.clamp(
-        this.curArcIndex + 1,
-        0,
-        this.arcData.length - 1
-      );
-      let curIndexTime = parseInt(
-        (this.arcData[this.curArcIndex].time + "").padEnd(13, 0)
-      );
+    this.arcData.some((item, index) => {
+      // 寻找当前时间点的物流数据作为开始
+      var curIndexTime = (item.time + "").padEnd(13, 0);
       if (curIndexTime < new Date().getTime()) {
-        this.curArcData = this.arcData[this.curArcIndex].data;
+        this.curArcIndex = index;
+        this.curArcData = this.curArcData.concat(item.data);
+        return false;
+      } else {
+        return true;
       }
-      // this.$refs.slideEl.next()
+    });
+    this.dataInterval = setInterval(() => {
+      this.getRightData();
+      this.curArcIndex = _.clamp(this.curArcIndex + 1, 0, this.arcData.length);
+      if (this.curArcIndex < this.arcData.length) {
+        let curIndexTime = parseInt(
+          (this.arcData[this.curArcIndex].time + "").padEnd(13, 0)
+        );
+        if (curIndexTime < new Date().getTime()) {
+          this.curArcData = this.curArcData.concat(
+            this.arcData[this.curArcIndex].data
+          );
+        }
+      }
+    }, 5000);
+    setInterval(() => {
+      this.$refs.slideEl.next();
     }, 10000);
   },
 };
