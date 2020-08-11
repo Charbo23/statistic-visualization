@@ -11,12 +11,6 @@ const constantRoutes = [
   {
     path: '/home',
     component: () => import('@/views/home/home.vue'),
-    meta: { title: '物联网大数据后台'}
-  },
-  {
-    path: '/test',
-    component: () => import('@/views/test/test.vue'),
-    meta: { title: '物联网大数据后台'}
   }
 ]
 

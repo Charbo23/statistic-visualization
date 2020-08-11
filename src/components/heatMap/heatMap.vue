@@ -5,110 +5,120 @@
 </template>
 
 <script>
-import _ from "lodash";
+import _ from 'lodash';
 export default {
-  name: "heatMap",
+  name: 'heatMap',
   props: {
     norData: {
       type: Array,
       default: function () {
         return [];
-      },
+      }
+    },
+    highlightNorData: {
+      type: Array,
+      default: function () {
+        return [];
+      }
     },
     geoCoordMap: {
       type: Object,
       default: function () {
         return {};
-      },
-    },
+      }
+    }
   },
   data() {
     return {
       myChart: null,
-      interval: null,
+      interval: null
     };
   },
   computed: {
     mapChartOpt() {
       return {
         title: {
-          show: false,
+          show: false
         },
         tooltip: {
-          trigger: "item",
+          trigger: 'item'
         },
         amap: {
-          zoom: 5,
+          zoom: 4,
           zooms: [3, 20],
-          mapStyle: "amap://styles/e6d3dfe65e954495b5ac5643e8a070e8",
-          center: [115, 36], // 中心点
-          resizeEnable: true,
+          mapStyle: 'amap://styles/e6d3dfe65e954495b5ac5643e8a070e8',
+          center: [120, 36], // 中心点
+          resizeEnable: true
         },
         series: [
           {
-            name: "做题量",
-            type: "scatter",
-            coordinateSystem: "amap",
+            name: '做题量',
+            type: 'scatter',
+            coordinateSystem: 'amap',
             data: this.convertData(this.norData),
             symbolSize: function (val) {
               return val[2] / 10;
             },
             encode: {
-              value: 2,
+              value: 2
             },
             label: {
-              formatter: "{b}",
-              position: "right",
-              show: false,
+              formatter: '{b}',
+              position: 'right',
+              show: false
             },
             itemStyle: {
-              color: "#2a84e6",
+              color: '#2a84e6'
             },
             emphasis: {
               label: {
-                show: true,
-              },
-            },
+                show: true
+              }
+            }
           },
           {
-            name: "当前更新",
-            type: "effectScatter",
-            coordinateSystem: "amap",
-            data: this.convertData(   _.shuffle(this.norData).slice(0, _.random(1,this.norData.length))),
+            name: '当前更新',
+            type: 'effectScatter',
+            coordinateSystem: 'amap',
+            data: this.convertData(this.highlightNorData),
             symbolSize: function (val) {
               return val[2] / 10;
             },
             encode: {
-              value: 2,
+              value: 2
             },
-            showEffectOn: "render",
+            showEffectOn: 'render',
             rippleEffect: {
-              brushType: "stroke",
+              brushType: 'stroke'
             },
             hoverAnimation: true,
             label: {
-              formatter: "{b}",
-              position: "right",
-              show: true,
+              formatter: '{b}',
+              position: 'right',
+              show: true
             },
             itemStyle: {
-              color: "yellow",
+              color: 'yellow',
               shadowBlur: 10,
-              shadowColor: "#333",
+              shadowColor: '#333'
             },
-            zlevel: 1,
-          },
-        ],
+            zlevel: 1
+          }
+        ]
       };
-    },
+    }
   },
   watch: {
     norData() {
       this.updateChart();
     },
-    geoCoordMap() {
+    highlightNorData(cur) {
+      this.mapChartOpt.series[1].data = this.convertData(cur);
       this.updateChart();
     },
+    geoCoordMap() {
+      this.updateChart();
+    }
   },
   methods: {
     convertData(data) {
@@ -118,12 +128,13 @@ export default {
         if (geoCoord) {
           res.push({
             name: data[i].name,
-            value: geoCoord.concat(data[i].value),
+            value: geoCoord.concat(data[i].value)
           });
         }
       }
       return res;
     },
+    // 初始化图表
     initEChart() {
       const heatMap = this.$refs.heatMap;
       if (heatMap) {
@@ -131,24 +142,18 @@ export default {
         this.myChart.setOption(this.mapChartOpt);
       }
     },
+    // 更新图表数据
     updateChart() {
       this.myChart.setOption(this.mapChartOpt);
-    },
+    }
   },
   created() {},
   mounted() {
     this.initEChart();
-    this.interval = setInterval(() => {
-      // 随机给点加上波纹动效
-      this.mapChartOpt.series[1].data = this.convertData(
-        _.shuffle(this.norData).slice(0, _.random(1,this.norData.length))
-      );
-      this.updateChart()
-    }, 10000);
-  },
+  }
 };
 </script>
 
 <style scoped lang="scss">
-@import "./heatMap";
+@import './heatMap';
 </style>
