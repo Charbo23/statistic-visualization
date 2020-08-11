@@ -2,12 +2,9 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import './permission'
-import './utils/ajax'
+import './utils/http'
 import './styles/style.scss'
 import './styles/project.scss'
-import wx from 'weixin-js-sdk'
-import VConsole from 'vconsole'
 import {DatePicker, Row, Col, Progress, Message, MessageBox, Loading, Carousel, CarouselItem} from 'element-ui';
 import './utils/flexible'
 import 'element-ui/lib/theme-chalk/index.css';
@@ -28,32 +25,7 @@ Vue.prototype.$message = Message;
 Vue.prototype.$confirm = MessageBox;
 Vue.prototype.$loading = Loading;
 
-if(process.env.NODE_ENV !== 'production' || process.env.VUE_APP_FLAG !== 'pro') {
-  // new VConsole()
-}
 
-import moment from 'moment'//导入文件
-Vue.prototype.$moment = moment;//赋值使用
-
-moment.locale('zh-cn');//需要汉化
-
-Vue.prototype.$wx = wx;
-
-// 设置不同环境的域名
-// if (process.env.NODE_ENV === 'development') {
-//   Vue.prototype.$baseUrl = '/api';
-//   Vue.prototype.$couponUrl = '/coupon'
-// } else if (process.env.NODE_ENV === 'production') {
-//   if (process.env.VUE_APP_FLAG === 'pro') {
-//     //production 生产环境
-//     Vue.prototype.$baseUrl = 'https://faceqr.luxcon.cn';
-//     // Vue.prototype.$couponUrl = '/coupon'
-//   } else {
-//     //test 测试环境
-//     Vue.prototype.$baseUrl = 'https://dev.luxcon.cn';
-//     Vue.prototype.$couponUrl = 'http://facedprd.luxcon.cn'
-//   }
-// }
 
 Vue.config.productionTip = false
 

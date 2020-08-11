@@ -1,19 +1,19 @@
 <template>
-  <div class="home_page">
+  <div class="home_page" v-cloak>
     <div class="content_group">
       <div class="content_padding">
-        <el-carousel :initial-index="0" :autoplay="true" @change="onSlideChange">
+        <el-carousel ref="slideEl" :initial-index="0" :autoplay="false"  @change="onSlideChange">
           <el-carousel-item>
             <el-row class="center_group">
               <el-col :span="24">
-                <heatMap></heatMap>
+                <HeatMap :norData="norData" :geoCoordMap="geoCoordMap"></HeatMap>
               </el-col>
             </el-row>
           </el-carousel-item>
           <el-carousel-item>
             <el-row class="center_group">
               <el-col :span="24">
-                <ArcFlow></ArcFlow>
+                <ArcFlow :arcData="curArcData"></ArcFlow>
               </el-col>
             </el-row>
           </el-carousel-item>
@@ -21,14 +21,27 @@
         <div class="chart-title">{{chartTitle}}</div>
         <div class="right-data">
           <div class="subscribe-total">
-            <IOdometer class="iOdometer" :value="rightData.subscribe" />
+            <IOdometer class="iOdometer right-data-num" :value="rightData.subscribe" />
+            <div class="sub-title">公众号总关注量</div>
           </div>
-          <div class="question-done">
-            <IOdometer class="iOdometer" :value="rightData.questionDone" />
-          </div>
-          <div class="unique-visitor">
-            <IOdometer class="iOdometer" :value="rightData.uniqueVisitor" />
-          </div>
+          <table class="right-data-table">
+            <tr class="right-data-item question-done">
+              <td>
+                <div class="left-title">今日做题人数</div>
+              </td>
+              <td>
+                <IOdometer class="iOdometer right-data-num" :value="rightData.questionDone" />
+              </td>
+            </tr>
+            <tr class="right-data-item unique-visitor">
+              <td>
+                <div class="left-title">今日UV数</div>
+              </td>
+              <td>
+                <IOdometer class="iOdometer right-data-num" :value="rightData.uniqueVisitor" />
+              </td>
+            </tr>
+          </table>
         </div>
       </div>
     </div>
@@ -36,10 +49,12 @@
 </template>
 
 <script>
-import heatMap from "../../components/heatMap/heatMap";
+import HeatMap from "../../components/HeatMap/HeatMap";
 import ArcFlow from "../../components/ArcFlow/ArcFlow";
+import _ from "lodash";
 import IOdometer from "vue-odometer";
 import "odometer/themes/odometer-theme-default.css";
+import { getUserVisualizedData, getCityUser, getShipOrder } from "@/api/home";
 
 export default {
   name: "home",
@@ -48,14 +63,19 @@ export default {
       chartTitleArr: ["做题人数分布图", "物流轨迹图"],
       curSlideIndex: 0,
       rightData: {
-        subscribe: 120500,
-        questionDone: 120400,
-        uniqueVisitor: 123123,
+        subscribe: 0,
+        questionDone: 0,
+        uniqueVisitor: 0,
       },
+      norData:[],
+      geoCoordMap:{},
+      arcData:[],
+      curArcData: [],
+      curArcIndex: 0,
     };
   },
   components: {
-    heatMap,
+    HeatMap,
     ArcFlow,
     IOdometer,
   },
@@ -68,14 +88,58 @@ export default {
     onSlideChange(cur, prev) {
       this.curSlideIndex = cur;
     },
+    async getRightData() {
+      const ret = await getUserVisualizedData();
+      this.rightData.subscribe =
+        parseInt(ret.data.total_num) > this.rightData.subscribe
+          ? parseInt(ret.data.total_num)
+          : this.rightData.subscribe;
+      this.rightData.questionDone =
+        ret.data.learn_users > this.rightData.questionDone
+          ? ret.data.learn_users
+          : this.rightData.questionDone;
+      this.rightData.uniqueVisitor =
+        ret.data.uv > this.rightData.uniqueVisitor
+          ? ret.data.uv
+          : this.rightData.uniqueVisitor;
+    },
+    async getMapData() {
+      const { city_ratio_list, city_lnglat_list } = await getCityUser();
+      this.norData = city_ratio_list;
+      this.geoCoordMap = city_lnglat_list;
+      this.arcData = await getShipOrder();
+    },
   },
-   created() {},
-  mounted() {
+  created() {},
+  async mounted() {
+    await this.getRightData();
+    await this.getMapData();
+    // this.arcData.some((item, index) => {
+    //   // 寻找当前时间点的物流数据作为开始
+    //   var curIndexTime= (item.time + "").padEnd(13, 0);
+    //   if (  curIndexTime< new Date().getTime()) {
+    //     this.curArcIndex = index;
+    //     return false;
+    //   } else {
+    //     return true;
+    //   }
+    // });
+    this.curArcData = this.arcData[this.curArcIndex].data;
     setInterval(() => {
-      for (const key in this.rightData) {
-        this.rightData[key]+=100
+      this.getRightData();
+      this.curArcIndex = _.clamp(
+        this.curArcIndex + 1,
+        0,
+        this.arcData.length - 1
+      );
+      let curIndexTime = parseInt(
+        (this.arcData[this.curArcIndex].time + "").padEnd(13, 0)
+      );
+      if (curIndexTime < new Date().getTime()) {
+        this.curArcData = this.arcData[this.curArcIndex].data;
       }
-    }, 5000);
+      // this.$refs.slideEl.next()
+    }, 10000);
   },
 };
 </script>
