@@ -3,6 +3,7 @@
 </template>
 
 <script>
+import _ from 'lodash'
 export default {
   name: 'ArcFlow',
   props: {
@@ -16,12 +17,14 @@ export default {
   data() {
     return {
       map: null,
-      arcMap: null
+      activeArcMap: null,//带动效的弧线图
+      staticArcMap:null//静态弧线图
     };
   },
   watch: {
-    arcData(cur) {
-      this.arcMap && this.arcMap.setData(cur);
+    arcData(cur,prev) {
+      this.staticArcMap && this.staticArcMap.setData(prev);
+      this.activeArcMap&& this.activeArcMap.setData(_.difference(cur,prev));
     }
   },
   methods: {
@@ -35,11 +38,17 @@ export default {
         mapStyleId: 'style1' //个性化样式
       });
       //初始化弧线图并添加至map图层
-      this.arcMap = new TMap.visualization.Arc({
+          this.staticArcMap = new TMap.visualization.Arc({
+        animatable: false,
+        mode: 'vertical' // 弧线平面与地平面垂直
+      }).addTo(this.map)
+      .setData(data); //设置数据
+      this.activeArcMap = new TMap.visualization.Arc({
         mode: 'vertical' // 弧线平面与地平面垂直
       })
         .addTo(this.map)
-        .setData(data); //设置数据
+     
+  
     }
   },
   mounted() {

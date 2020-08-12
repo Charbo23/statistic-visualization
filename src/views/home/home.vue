@@ -157,7 +157,7 @@ export default {
       // 寻找当前时间点的物流数据作为开始
       var curIndexTime = (item.time + '').padEnd(13, 0);
       if (curIndexTime < new Date().getTime()) {
-        this.curArcIndex = index;
+        this.curArcIndex = index+1;
         this.curArcData = this.curArcData.concat(item.data);
         return false;
       } else {
@@ -167,11 +167,11 @@ export default {
     this.dataInterval = setInterval(() => {
       this.getRightData();
       // 更新物流轨迹
-      this.curArcIndex = _.clamp(this.curArcIndex + 1, 0, this.arcData.length);
       if (this.curArcIndex < this.arcData.length) {
         let curIndexTime = parseInt((this.arcData[this.curArcIndex].time + '').padEnd(13, 0));
         if (curIndexTime < new Date().getTime()) {
           this.curArcData = this.curArcData.concat(this.arcData[this.curArcIndex].data);
+          this.curArcIndex++
         }
       }
       this.updateHighlightData();

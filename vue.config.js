@@ -8,7 +8,7 @@ module.exports = {
     open: true,
     proxy: {
       '/api': {
-        target: 'https://admin-hotfix.dev.ehafo.com', // 测试
+        target: 'https://admin.ehafo.com', // 测试
         secure: true,
         changeOrigin: true, //是否跨域
         pathRewrite: {
