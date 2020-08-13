@@ -75,7 +75,7 @@ html,body{
 }
 
 body{
-  font-family: "PingFang-SC-Heavy", -apple-system, BlinkMacSystemFont, "PingFang SC","Helvetica Neue",STHeiti,"Microsoft Yahei",Tahoma,Simsun,sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC","Helvetica Neue",STHeiti,"Microsoft Yahei",Tahoma,Simsun,sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background: #000;
@@ -89,7 +89,9 @@ body{
   //overflow: auto;
   -webkit-overflow-scrolling: touch;
 }
-
+[v-cloak]{
+  visibility: hidden;
+}
 .page-contain{
   height: 100vh;
   position: relative;

@@ -7,7 +7,7 @@
 <script>
 import _ from 'lodash';
 export default {
-  name: 'heatMap',
+  name: 'HeatMap',
   props: {
     norData: {
       type: Array,
@@ -155,5 +155,5 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import './heatMap';
+@import './HeatMap.scss'
 </style>

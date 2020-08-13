@@ -72,8 +72,6 @@
     .comma_item {
       span {
         display: inline-block;
-        //height: 60px;
-        //line-height: 80px;
         margin: 0 9px;
         color: #f2d300;
         font-size: 82px;
@@ -82,22 +80,6 @@
     .number_item + .number_item {
       margin-left: 12px;
     }
-    //.h_num{
-    //  margin-left: 12px;
-    //  display: flex;
-    //  align-items: center;
-    //  justify-content: center;
-    //  color: #F2D300;
-    //  font-size: 82px;
-    //  font-weight: 400;
-    //  position: relative;
-    //  .h_comma{
-    //    position: absolute;
-    //    left: -20px;
-    //    bottom: 0;
-    //    font-size: 60px;
-    //  }
-    //}
   }
 }
 .month_group {
