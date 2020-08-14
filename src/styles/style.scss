@@ -5,48 +5,128 @@
 /*
  CSS初始化
  */
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed,
-figure, figcaption, footer, header, hgroup,
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
   margin: 0;
   padding: 0;
   border: 0;
   vertical-align: baseline;
 }
 /* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure,
-footer, header, hgroup, menu, nav, section {
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
   display: block;
 }
 body {
   line-height: 1;
 }
-ol, ul {
+ol,
+ul {
   list-style: none;
 }
-blockquote, q {
+blockquote,
+q {
   quotes: none;
 }
-blockquote:before, blockquote:after,
-q:before, q:after {
-  content: '';
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: "";
   content: none;
 }
 table {
   border-collapse: collapse;
   border-spacing: 0;
 }
-
 
 /*
   自定义CSS
@@ -62,20 +142,28 @@ table {
   }
 }
 
-html,body{
-  width: 100vw;
-  height: 100vh;
+html,
+body {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
   overflow: hidden;
+  transform: translate(0, 0, 0);
+  -webkit-transform: translate(0, 0, 0);
 }
 
 @font-face {
   font-family: "AlipayNumber";
   src: url("https://gw.alipayobjects.com/as/g/antui/antui-static/1.0.3/fonts/AlipayNumber-Regular.ttf")
-  format("truetype");
+    format("truetype");
 }
 
-body{
-  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC","Helvetica Neue",STHeiti,"Microsoft Yahei",Tahoma,Simsun,sans-serif;
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", STHeiti, "Microsoft Yahei", Tahoma,
+    Simsun, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background: #000;
@@ -84,43 +172,39 @@ body{
   font-size: 24px;
   overflow: auto;
 }
-#app{
+#app {
   height: 100%;
   //overflow: auto;
   -webkit-overflow-scrolling: touch;
 }
-[v-cloak]{
+[v-cloak] {
   visibility: hidden;
 }
-.page-contain{
+.page-contain {
   height: 100vh;
   position: relative;
   background: #fff;
 }
 
 //margin && padding
-$sites:(
-        t: top,
-        r: right,
-        b: bottom,
-        l: left
+$sites: (
+  t: top,
+  r: right,
+  b: bottom,
+  l: left,
 );
 
-$sizes:(
-        0: 0,
-        10: 10px,
-        20: 20px,
-        30: 30px,
-        40: 40px
+$sizes: (
+  0: 0,
+  10: 10px,
+  20: 20px,
+  30: 30px,
+  40: 40px,
 );
 
-@each $prop,
-$abbrev in ( m: margin,
-        p: padding) {
-  @each $name,
-  $value in $sites {
-    @each $size,
-    $length in $sizes {
+@each $prop, $abbrev in (m: margin, p: padding) {
+  @each $name, $value in $sites {
+    @each $size, $length in $sizes {
       .#{$prop}-#{$name}-#{$size} {
         #{$abbrev}-#{$value}: $length;
       }
@@ -128,50 +212,54 @@ $abbrev in ( m: margin,
   }
 }
 
-input{
+input {
   border: none;
-  outline:none;
+  outline: none;
 }
 
-input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
-  color: #00665F;
+input::-webkit-input-placeholder,
+textarea::-webkit-input-placeholder {
+  color: #00665f;
 }
-input:-moz-placeholder, textarea:-moz-placeholder {
-  color: #00665F;
+input:-moz-placeholder,
+textarea:-moz-placeholder {
+  color: #00665f;
 }
-input::-moz-placeholder, textarea::-moz-placeholder {
-  color: #00665F;
+input::-moz-placeholder,
+textarea::-moz-placeholder {
+  color: #00665f;
 }
-input:-ms-input-placeholder, textarea:-ms-input-placeholder {
-  color: #00665F;
+input:-ms-input-placeholder,
+textarea:-ms-input-placeholder {
+  color: #00665f;
 }
-.button-base{
-  width:380px;
-  height:56px;
-  border-radius:2px;
+.button-base {
+  width: 380px;
+  height: 56px;
+  border-radius: 2px;
   font-size: 24px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 500;
 }
-.button-blue{
-  background: #00C7B9;
-  color: #FFFFFF;
+.button-blue {
+  background: #00c7b9;
+  color: #ffffff;
 }
 
-.flex1{
+.flex1 {
   flex: 1;
 }
 
-.m-0{
+.m-0 {
   margin: 0 !important;
 }
 
-.p-0{
+.p-0 {
   padding: 0 !important;
 }
-.one_line_ellipsis{
+.one_line_ellipsis {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
