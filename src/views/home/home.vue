@@ -11,7 +11,7 @@
             <div class="wing-bar"></div>
           </div>
           <div class="date-year">{{dateData.year}}</div>
-         <div class="year-wing">
+          <div class="year-wing">
             <div class="wing-bar"></div>
             <div class="wing-bar"></div>
             <div class="wing-bar"></div>
@@ -32,8 +32,7 @@
               <div class="left-title">今日做题量：</div>
             </td>
             <td>
-              <vue-numeric separator="," :read-only="true" v-model="rightData.learnNums"></vue-numeric>
-              题
+              <vue-numeric separator="," :read-only="true" v-model="rightData.learnNums"></vue-numeric>&nbsp;题
             </td>
           </tr>
           <tr class="right-data-item bottom-num">
@@ -41,8 +40,7 @@
               <div class="left-title">公众号关注总数：</div>
             </td>
             <td>
-              <vue-numeric separator="," :read-only="true" v-model="rightData.totalNum"></vue-numeric>
-              人
+              <vue-numeric separator="," :read-only="true" v-model="rightData.totalNum"></vue-numeric>&nbsp;人
             </td>
           </tr>
           <tr class="right-data-item bottom-num">
@@ -50,8 +48,7 @@
               <div class="left-title">今日新增关注：</div>
             </td>
             <td>
-              <vue-numeric separator="," :read-only="true" v-model="rightData.todaySubscribes"></vue-numeric>
-              人
+              <vue-numeric separator="," :read-only="true" v-model="rightData.todaySubscribes"></vue-numeric>&nbsp;人
             </td>
           </tr>
         </table>
@@ -95,13 +92,39 @@ export default {
   computed: {},
   methods: {
     // 获取右侧数据
-    async getRightData() {
-      const ret = await getUserVisualizedData({ type: 'common' });
-      if (ret.code == 0) {
-        this.rightData.totalNum = _.max([this.rightData.totalNum, parseInt(ret.data.total_num)]);
-        this.rightData.todaySubscribes = _.max([this.rightData.todaySubscribes, parseInt(ret.data.today_subscribes)]);
-        this.rightData.learnNums = _.max([this.rightData.learnNums, parseInt(ret.data.learn_nums)]);
-        this.rightData.uv = _.max([this.rightData.uv, parseInt(ret.data.uv)]);
+    getRightData() {
+      this.stopDataInterval();
+      return getUserVisualizedData({ type: 'common' })
+        .then((ret) => {
+          if (ret.code == 0) {
+            this.rightData.totalNum = _.max([this.rightData.totalNum, parseInt(ret.data.total_num)]);
+            this.rightData.todaySubscribes = _.max([
+              this.rightData.todaySubscribes,
+              parseInt(ret.data.today_subscribes)
+            ]);
+            this.rightData.learnNums = _.max([this.rightData.learnNums, parseInt(ret.data.learn_nums)]);
+            this.rightData.uv = _.max([this.rightData.uv, parseInt(ret.data.uv)]);
+          }
+          this.startDataInterval();
+        })
+        .catch((e) => {
+          console.log(e);
+          this.startDataInterval();
+        });
+    },
+    // 开启数据轮询
+    startDataInterval() {
+      if (!this.dataInterval) {
+        this.dataInterval = setInterval(() => {
+          this.getRightData();
+        }, 5000);
+      }
+    },
+    // 停止数据轮询
+    stopDataInterval() {
+      if (this.dataInterval) {
+        clearInterval(this.dataInterval);
+        this.dataInterval = null;
       }
     }
   },
@@ -115,12 +138,7 @@ export default {
         time: dayjsObj.format('HH:mm')
       };
     }, 1000);
-    this.getRightData().then(() => {
-    // 更新数据
-      this.dataInterval = setInterval(() => {
-        this.getRightData();
-      }, 5000);
-    });
+    this.getRightData();
   },
   async mounted() {}
 };
