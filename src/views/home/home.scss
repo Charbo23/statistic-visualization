@@ -18,8 +18,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-width: 320px;
-  padding: 70px 45px;
+  min-width: 300px;
+  padding: 65px 45px;
   font-size: 30px;
   .date-top{
     font-size: 45px;
@@ -62,7 +62,7 @@
     min-width: 120px;
   }
   .right-data-table {
-    margin: 50px 0;
+    margin: 50px 0 40px;
   }
   .right-data-item + .right-data-item {
     margin-top: 20px;
