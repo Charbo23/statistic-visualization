@@ -14,12 +14,12 @@ const constantRoutes = [
     meta: { title: '数据可视化' },
     component: () => import('@/views/home/home.vue')
   },
-  {
-    path: '/vmap',
-    name: 'Vmap',
-    meta: { title: '数据可视化地图' },
-    component: () => import('@/views/vmap/vmap.vue')
-  },
+  // {
+  //   path: '/vmap',
+  //   name: 'Vmap',
+  //   meta: { title: '数据可视化地图' },
+  //   component: () => import('@/views/vmap/vmap.vue')
+  // },
   {
     // 页面不存在的情况下跳转首页
     path: '*',

@@ -126,17 +126,21 @@ export default {
         clearInterval(this.dataInterval);
         this.dataInterval = null;
       }
-    }
-  },
-  async created() {
-    this.dateInterval = setInterval(() => {
-      // 更新时间
+    },
+    // 更新时间
+    updateTime(){
       const dayjsObj = dayjs();
       this.dateData = {
         year: dayjsObj.year(),
         week: dayjsObj.format('dddd'),
         time: dayjsObj.format('HH:mm')
       };
+    }
+  },
+  async created() {
+    this.updateTime()
+    this.dateInterval = setInterval(() => {
+     this.updateTime()
     }, 1000);
     this.getRightData();
   },
