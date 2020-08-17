@@ -73,7 +73,8 @@ export default {
         totalNum: 0,
         learnNums: 0,
         todaySubscribes: 0,
-        uv: 0
+        uv: 0,
+        dayjsObj: dayjs()
       },
       dataInterval: null,
       dayjsObj: null,
@@ -97,13 +98,23 @@ export default {
       return getUserVisualizedData({ type: 'common' })
         .then((ret) => {
           if (ret.code == 0) {
-            this.rightData.totalNum = _.max([this.rightData.totalNum, parseInt(ret.data.total_num)]);
-            this.rightData.todaySubscribes = _.max([
-              this.rightData.todaySubscribes,
-              parseInt(ret.data.today_subscribes)
-            ]);
-            this.rightData.learnNums = _.max([this.rightData.learnNums, parseInt(ret.data.learn_nums)]);
-            this.rightData.uv = _.max([this.rightData.uv, parseInt(ret.data.uv)]);
+            const curDayjsObj = dayjs();
+            if (this.rightData.dayjsObj.isSame(curDayjsObj, 'day')) {
+              // 若与上一次的数据获取时间处于同一天则数据只允许增加
+              this.rightData.totalNum = _.max([this.rightData.totalNum, parseInt(ret.data.total_num || 0)]);
+              this.rightData.todaySubscribes = _.max([
+                this.rightData.todaySubscribes,
+                parseInt(ret.data.today_subscribes || 0)
+              ]);
+              this.rightData.learnNums = _.max([this.rightData.learnNums, parseInt(ret.data.learn_nums || 0)]);
+              this.rightData.uv = _.max([this.rightData.uv, parseInt(ret.data.uv || 0)]);
+            } else {
+              this.rightData.totalNum = parseInt(ret.data.total_num || 0);
+              this.rightData.todaySubscribes = parseInt(ret.data.today_subscribes || 0);
+              this.rightData.learnNums = parseInt(ret.data.learn_nums || 0);
+              this.rightData.uv = parseInt(ret.data.uv || 0);
+            }
+            this.rightData.dayjsObj = curDayjsObj;
           }
           this.startDataInterval();
         })
@@ -128,7 +139,7 @@ export default {
       }
     },
     // 更新时间
-    updateTime(){
+    updateTime() {
       const dayjsObj = dayjs();
       this.dateData = {
         year: dayjsObj.year(),
@@ -138,9 +149,9 @@ export default {
     }
   },
   async created() {
-    this.updateTime()
+    this.updateTime();
     this.dateInterval = setInterval(() => {
-     this.updateTime()
+      this.updateTime();
     }, 1000);
     this.getRightData();
   },
