@@ -1,15 +1,14 @@
-import axios from "axios";
-import { Message } from "ant-design-vue";
-
+import axios from 'axios';
+import { Message } from 'element-ui';
 
 const instance = axios.create({
   baseURL: process.env.VUE_APP_API_BASE_URL,
-  crossDomain:true,
-  timeout: 20000,
+  crossDomain: true,
+  timeout: 20000
 });
 const mockInstance = axios.create({
-  baseURL: "",
-  timeout: 20000,
+  baseURL: '',
+  timeout: 20000
 });
 // 请求拦截器
 instance.interceptors.request.use(
@@ -26,7 +25,10 @@ instance.interceptors.response.use(
     return response;
   },
   (error) => {
-    Message.error(error.message)
+    Message({
+      message: error.message,
+      center: true
+    });
     return Promise.reject(error);
   }
 );
@@ -66,5 +68,5 @@ export default {
           reject(error);
         });
     });
-  },
+  }
 };
