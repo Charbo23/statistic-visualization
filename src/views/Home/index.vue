@@ -21,7 +21,7 @@ export default {
   data() {
     return {
       swiperOption: {
-        autoplay: 6000,
+        autoplay: 10000,
         speed: 2000,
         effect: 'fade'
       }
