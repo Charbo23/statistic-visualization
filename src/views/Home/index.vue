@@ -4,7 +4,7 @@
       ref="slideEl"
       class="slide-block"
       :autoplay="true"
-      :autoplaySpeed="5000"
+      :autoplaySpeed="7000"
       :speed="2000"
       :dots="false"
       :pauseOnHover="false"
