@@ -21,4 +21,19 @@ module.exports = {
     config.resolve.alias.set('@', path.resolve(__dirname, 'src')).set('@mock', path.resolve(__dirname, 'mock'));
     config.performance.set('maxAssetSize', 1024 * 1024).set('maxEntrypointSize', 1024 * 1024);
   },
+  css: {
+    loaderOptions: {
+      less: {
+        lessOptions: {
+          // 自定义antd主题色
+          modifyVars: {
+            // 'primary-color': '#41b883'
+            // 'link-color': '#1DA57A',
+            // 'border-radius-base': '2px',
+          },
+          javascriptEnabled: true
+        }
+      }
+    }
+  }
 };

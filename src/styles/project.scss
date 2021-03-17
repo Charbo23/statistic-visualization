@@ -65,30 +65,6 @@
   display: none;
 }
 
-.progress1{
-  width: 202px;
-  .el-progress-bar__outer{
-    background: #3E1900;
-  }
-}
-
-.progress2{
-  width: 202px;
-  .el-progress-bar__outer{
-    background: #002B28;
-  }
-}
-
-.progress{
-  width: 100px;
-  .el-progress-bar__outer{
-    background: #002B28;
-  }
-  .el-progress-bar__inner{
-    transition: width 1s;
-  }
-}
-
 .amap-logo{
   display: none !important;//去掉高德地图logo
 }
@@ -98,10 +74,6 @@
 
 .col_active{
   color: #FF7011;
-}
-
-.el-col{
-  height: 100%;
 }
 
 .login_input_pub{
