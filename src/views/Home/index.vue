@@ -28,7 +28,8 @@ export default {
     };
   },
   components: {
-   swiper, swiperSlide ,
+    swiper,
+    swiperSlide,
     NumberFlow,
     TempImage
   },
