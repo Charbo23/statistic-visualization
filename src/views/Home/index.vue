@@ -14,25 +14,21 @@
 <script>
 import NumberFlow from './components/NumberFlow';
 import TempImage from './components/TempImage';
-import { Swiper, SwiperSlide } from 'vue-awesome-swiper';
-import 'swiper/css/swiper.css'
+import { swiper, swiperSlide } from 'vue-awesome-swiper';
+import 'swiper/dist/css/swiper.css';
 export default {
   name: 'Home',
   data() {
     return {
       swiperOption: {
-  autoplay: {
-          delay: 6000,
-          disableOnInteraction: false
-        },
+        autoplay: 6000,
         speed: 2000,
         effect: 'fade'
       }
     };
   },
   components: {
-    Swiper,
-    SwiperSlide,
+   swiper, swiperSlide ,
     NumberFlow,
     TempImage
   },
