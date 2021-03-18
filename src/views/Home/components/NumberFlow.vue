@@ -191,7 +191,6 @@ export default {
   .date-bottom {
     width: 100%;
     display: flex;
-    align-items: center;
     .date-year {
       margin: 0 10px;
     }
@@ -199,12 +198,11 @@ export default {
       flex: 1;
       display: flex;
       flex-direction: column;
+      justify-content: space-between;
+      padding:2px 0;
       .wing-bar {
         height: 5px;
         background-color: #df3b04;
-      }
-      .wing-bar + .wing-bar {
-        margin-top: 5px;
       }
     }
   }
