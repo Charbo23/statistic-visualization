@@ -1,5 +1,6 @@
 <template>
   <div class="page home" v-cloak>
+    <img class="ehafo-icon" src="~@/assets/images/ehafo-icon.png" />
     <swiper ref="slideEl" class="slide-block" :options="swiperOption">
       <swiper-slide class="slide-item">
         <NumberFlow></NumberFlow>
@@ -39,6 +40,15 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.ehafo-icon {
+  position: absolute;
+  width: 40px;
+  height: 35px;
+  right: 2.4%;
+  top: 2.8%;
+  z-index: 10;
+  border-radius: 1px;
+}
 .slide-block {
   width: 100%;
   height: 100%;
