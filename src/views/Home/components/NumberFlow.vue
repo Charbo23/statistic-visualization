@@ -185,13 +185,12 @@ export default {
     letter-spacing: 2px;
   }
   .date-middle {
-    font-size: 70px;
+    font-size: 68px;
     margin: 55px 0 65px;
   }
   .date-bottom {
     width: 100%;
     display: flex;
-    align-items: center;
     .date-year {
       margin: 0 10px;
     }
@@ -199,12 +198,11 @@ export default {
       flex: 1;
       display: flex;
       flex-direction: column;
+      justify-content: space-between;
+      padding:6px 0;
       .wing-bar {
-        height: 5px;
+        height: 6px;
         background-color: #df3b04;
-      }
-      .wing-bar + .wing-bar {
-        margin-top: 5px;
       }
     }
   }

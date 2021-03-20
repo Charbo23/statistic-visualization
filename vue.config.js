@@ -5,7 +5,7 @@ module.exports = {
   publicPath: './',
   devServer: {
     port: 8082,
-    open: true,
+    open: false,
     proxy: {
       '/api': {
         target: 'https://admin.ehafo.com', // 测试

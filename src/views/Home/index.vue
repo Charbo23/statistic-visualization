@@ -42,8 +42,8 @@ export default {
 <style scoped lang="scss">
 .ehafo-icon {
   position: absolute;
-  width: 40px;
-  height: 35px;
+  width: 52px;
+  height: 50px;
   right: 2.4%;
   top: 2.8%;
   z-index: 10;
