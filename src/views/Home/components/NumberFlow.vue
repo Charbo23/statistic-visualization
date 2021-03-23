@@ -198,11 +198,13 @@ export default {
       flex: 1;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      padding:6px 0;
+      justify-content: center;
       .wing-bar {
-        height: 6px;
+        height: 5px;
         background-color: #df3b04;
+      }
+      .wing-bar +.wing-bar{
+        margin-top: 6px;
       }
     }
   }
