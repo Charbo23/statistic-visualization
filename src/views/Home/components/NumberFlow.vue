@@ -27,6 +27,12 @@
           人
         </div>
         <table class="right-data-table">
+           <tr class="right-data-item bottom-num">
+            <td>
+              <div class="left-title">今日做题人数：</div>
+            </td>
+            <td><vue-numeric separator="," :read-only="true" v-model="rightData.learnUsers"></vue-numeric>&nbsp;人</td>
+          </tr>
           <tr class="right-data-item bottom-num">
             <td>
               <div class="left-title">今日做题量：</div>
@@ -68,6 +74,7 @@ export default {
       rightData: {
         totalNum: 0,
         learnNums: 0,
+        learnUsers: 0,
         todaySubscribes: 0,
         uv: 0,
         dayjsObj: dayjs()
@@ -103,11 +110,13 @@ export default {
                 parseInt(ret.data.today_subscribes || 0)
               ]);
               this.rightData.learnNums = _.max([this.rightData.learnNums, parseInt(ret.data.learn_nums || 0)]);
+              this.rightData.learnUsers = _.max([this.rightData.learnUsers, parseInt(ret.data.learn_users || 0)]);
               this.rightData.uv = _.max([this.rightData.uv, parseInt(ret.data.uv || 0)]);
             } else {
               this.rightData.totalNum = parseInt(ret.data.total_num || 0);
               this.rightData.todaySubscribes = parseInt(ret.data.today_subscribes || 0);
               this.rightData.learnNums = parseInt(ret.data.learn_nums || 0);
+              this.rightData.learnUsers = parseInt(ret.data.learn_users || 0);
               this.rightData.uv = parseInt(ret.data.uv || 0);
             }
             this.rightData.dayjsObj = curDayjsObj;
